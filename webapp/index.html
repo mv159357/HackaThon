@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    if (navigator.serial) {
+        // The Serial API is supported.
+        console.log("Serial API is supported");
+        connectSerial();
+    } else {
+        // The Serial API is not supported.
+        console.log("Serial API is not supported");
+    }
+
+    async function connectSerial() {
+        try {
+            const port = await navigator.serial.requestPort();
+            await port.open({ baudRate: 9600 });
+            const decoder = new TextDecoderStream();
+            const inputDone = port.readable.pipeTo(decoder.writable);
+
+            const inputStream = decoder.readable
+            const reader =  await inputStream.getReader();
+
+            while (true){
+                const {value} = await reader.read();
+
+                if (value) {
+                    console.log(value);
+                }
+
+                reader.releaseLock();
+                break;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+</script>
+<body>
+    <p>Yes</p>
+    <button id="connectButton">Connect</button>
+    <script>
+        const connectButton = document.getElementById("connectButton");
+
+        function handleClick() {
+            if (navigator.serial){
+                connectSerial();
+            } else {
+                console.log("Serial API is not supported");
+            }
+        }
+        
+        connectButton.addEventListener("click", handleClick);
+    </script>
+</body>
+</html>
