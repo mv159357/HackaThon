@@ -75,7 +75,7 @@ void setup() {
   Serial.println("\r\nSetting new name. Old name is");
   bt_serial.write("AT+NAME?\r\n");  // get current name
   bt_to_usb();
-  bt_serial.write("AT+NAME=HC-10\r\n");  // Set new name
+  bt_serial.write("AT+NAME=wedontknow\r\n");  // Set new name
   bt_to_usb();
   Serial.println("New name is:");
   bt_serial.write("AT+NAME?\r\n");  // get current name
@@ -86,7 +86,7 @@ void setup() {
   Serial.println("\r\nSetting new pin. Old pin is");
   bt_serial.write("AT+PSWD?\r\n");  // get current pin
   bt_to_usb();
-  bt_serial.write("AT+PSWD=0000\r\n");  // Set new password
+  bt_serial.write("AT+PSWD=0987\r\n");  // Set new password
   bt_to_usb();
   Serial.println("New pin is:");
   bt_serial.write("AT+PSWD?\r\n");  // get current password
@@ -121,7 +121,7 @@ void loop() {
   }
   
 
-  // this just copies the characters from BT -> USB or USB->BT for debugging
+// this just copies the characters from BT -> USB or USB->BT for debugging
 //  if(bt_serial.available())
 //  {
 //    input = bt_serial.read(); // this will only read 1 byte I think
